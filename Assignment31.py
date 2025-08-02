@@ -40,11 +40,11 @@ def BreastCancerCaseStudy(datapath):
     scaler = StandardScaler()
     x_scale = scaler.fit_transform(x)
     
-    DecisionTree(x_scale,y)
-    Randomforest(x_scale,y)
+    DecisionTree(x_scale,y,x)
+    Randomforest(x_scale,y,x)
     
 
-def DecisionTree(x_scale,y):
+def DecisionTree(x_scale,y,x):
     
     print("\n Random Forest Classifier  Result :\n")
     
@@ -83,8 +83,14 @@ def DecisionTree(x_scale,y):
     plt.legend()
     plt.grid(True)
     plt.show()
+    importance = pd.Series(model.feature_importances_,index=x.columns)
+    importance = importance.sort_values(ascending=False)
+    
+    importance.plot(kind='bar', figsize=(10,7), title="Features Importance")
+    plt.show()
+    
        
-def Randomforest(x_scale,y):
+def Randomforest(x_scale,y,x):
     
     print("\n Random Forest Classifier  Result :\n")
     
@@ -122,7 +128,12 @@ def Randomforest(x_scale,y):
     plt.title('ROC Curve - Random Forest Classifier')
     plt.legend()
     plt.grid(True)
-    plt.show()   
+    plt.show()
+    importance = pd.Series(model.feature_importances_,index=x.columns)
+    importance = importance.sort_values(ascending=False)
+    
+    importance.plot(kind='bar', figsize=(10,5), title="Features Importance")
+    plt.show() 
 
 
 def main():
